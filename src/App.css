@@ -10,6 +10,15 @@ h1 {
   color: #2c3e50;
   margin-bottom: 20px;
 }
+/* Search input styles */
+.search-input {
+  padding: 10px;
+  margin-bottom: 20px;
+  width: 60%;
+  border: 1px solid #ccc;
+  outline: none;
+  border-radius: 5px;
+}
 
 /* List styles */
 ul {

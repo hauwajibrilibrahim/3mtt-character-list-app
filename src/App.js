@@ -1,11 +1,14 @@
+// src/App.js
 import React, { useEffect, useState } from 'react';
 import ListComponent from './components/listComponent';
+import Spinner from './components/Spinner';
 import './App.css';
 
 function App() {
   const [characters, setCharacters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     fetch('https://rickandmortyapi.com/api/character')
@@ -25,16 +28,28 @@ function App() {
       });
   }, []);
 
+  const filteredCharacters = characters.filter((char) =>
+    char.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="app-container">
       <h1>Rick and Morty Characters</h1>
 
-      {loading && <p>Loading...</p>}
+      <input
+        type="text"
+        placeholder="Search characters..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="search-input"
+      />
+
+      {loading && <Spinner />}
       {error && <p className="error">{error}</p>}
 
       {!loading && !error && (
         <ListComponent
-          items={characters}
+          items={filteredCharacters}
           renderItem={(character) => (
             <div className="character-card">
               <img src={character.image} alt={character.name} />
